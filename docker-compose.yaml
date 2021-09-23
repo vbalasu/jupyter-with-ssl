@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  jupyter:
+    entrypoint: ["/usr/local/bin/start-notebook.sh", "--NotebookApp.keyfile=/etc/letsencrypt/live/strata-jupyter.amer.trifacta.net/privkey.pem", "--NotebookApp.certfile=/etc/letsencrypt/live/strata-jupyter.amer.trifacta.net/fullchain.pem"]
+    image: "jupyter/scipy-notebook:latest"
+    ports: 
+      - "8888:8888"
+    volumes:
+      - ./data:/home/jovyan
+      - ./config:/root/.jupyter
