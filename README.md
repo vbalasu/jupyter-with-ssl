@@ -1,18 +1,24 @@
-# README
+# Jupyter with SSL (over HTTPS)
+
+You can generate SSL/TLS certificates using Letsencrypt's certbot, then use those certificates to secure your Jupyter installation.
 
 There are 2 flavors of Jupyter installed:
 
 1. Running directly on centos server at port 8888
 2. Running in a docker container at port 8889
 
-Both flavors are secured by SSL
+Both flavors are secured by SSL. 
+You can access the docker version here: https://strata-jupyter.amer.trifacta.net:8889/lab
 
 ### 1. Direct installation on centos
 
-Made changes to config file:
+Install Anaconda, then generate configuration file by using the following command:
+`jupyter notebook --generate-config` OR `jupyter lab --generate-config`
+
+Make changes to config file:
 /home/centos/.jupyter/jupyter_notebook_config.py
 
-changes are tracked in git repository
+changes are tracked in git repository on the server
 
 ### 2. Docker container - jupyter/datascience-notebook:latest
 
