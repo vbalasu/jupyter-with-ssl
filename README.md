@@ -22,9 +22,22 @@ changes are tracked in git repository on the server
 
 ### 2. Docker container - jupyter/datascience-notebook:latest
 
+Use Ubuntu for best results. Avoid Amazon Linux
+
+On Ubuntu, install nginx and certbot
+Generate TLS certificates for your site using certbot, and ensure that you are able to reach nginx on https.
+
 [Docker configuration help](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html)
 
-Once the container has started (start_jupyter_docker.sh), go into the container and edit ~/.jupyter/jupyter_lab_config.py
+Copy the cert file (fullchain.pem) and key file (privkey.pem) to the `keys` directory. Create a blank `work` directory.
+
+Once the container has started (start_jupyter_docker.sh), go into the container and generate a jupyter lab config file.
+
+```
+jupyter lab --generate-config
+```
+
+then edit ~/.jupyter/jupyter_lab_config.py
 
 Use the following settings:
 
@@ -44,3 +57,15 @@ c.ServerApp.keyfile = '/keys/privkey.pem'
 
 c.ServerApp.certfile = '/keys/fullchain.pem'
 
+Now find and kill the jupyter-lab process
+```
+ps aux |grep jupyter
+kill {PROCESS_ID}
+```
+this will stop the container. Restart the container
+```
+docker ps -a
+docker start {CONTAINER_ID}
+```
+
+Keep in mind that curl localhost:8889 will now fail. You must access Jupyter by using https and entering the password.
